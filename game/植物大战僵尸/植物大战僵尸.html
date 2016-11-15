@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>植物大战僵尸</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<style>
+			.wrap{
+				width: 800px;
+				height:500px;
+				border:1px solid tomato;
+				position:relative;
+				margin:0 auto;
+				overflow: hidden;
+			}
+			.corpse{
+				width: 200px;
+				height: 200px;
+				background-color: red;
+				position: absolute;
+				top:150px;
+				right:50px;
+				font-size: 3em;
+				text-align: center;
+				line-height: 200px;
+			}
+			.buttet{
+				width: 20px;
+				height: 20px;
+				background-color: green;
+				position: absolute;
+				top:240px;
+				left:-21px;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="corpse">100</div>
+			<div class="buttet"></div>
+		</div>
+	</body>
+	<script>
+		
+		 var divBull=document.querySelector(".buttet");
+		 var timer=null;
+		 var blood=100;
+		 timer=setInterval(function(){
+		 	var bullOffLeft=divBull.offsetLeft;
+		 	bullOffLeft+=5;
+		 	divBull.style.left=bullOffLeft+"px";
+		 	//碰撞jiance
+		 	if(bullOffLeft+divBull.offsetWidth>=divCorp.offsetLeft){
+		 		divBull.style.left=-21+"px";
+		 		blood-=10;
+		 		divCorp.innerHTML=blood;
+		 		if(blood<=0){
+		 			//清除timer
+		 			clearInterval(timer);
+		 			timer=null;
+		 			//大块消失
+		 			divCorp.remove();
+		 			//子弹消失
+		 			divBull.remove();
+		 			alert("你赢了");
+		 		}
+		 		
+		 	}
+		 	
+		 },10);
+	</script>
+</html>

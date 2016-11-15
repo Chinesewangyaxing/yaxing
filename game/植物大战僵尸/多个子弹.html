@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>植物大战僵尸</title>
+		<link rel="stylesheet" type="text/css" href="css/reset.css"/>
+		<style>
+			.wrap{
+				width: 800px;
+				height:500px;
+				border:1px solid tomato;
+				position:relative;
+				margin:0 auto;
+				overflow: hidden;
+			}
+			.corpse{
+				width: 200px;
+				height: 200px;
+				background-color: red;
+				position: absolute;
+				top:150px;
+				right:50px;
+				font-size: 3em;
+				text-align: center;
+				line-height: 200px;
+			}
+			.buttet{
+				width: 20px;
+				height: 20px;
+				background-color: green;
+				position: absolute;
+				top:240px;
+				left:-21px;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="corpse">100</div>
+			<!--<div class="buttet"></div>-->
+		</div>
+	</body>
+	<script>
+		 var divWrap=document.querySelector(".wrap");
+		 var divCorp=document.querySelector(".corpse");
+		 var blood=100;
+		 //每隔多少是时间创建一个子弹
+		 var timer=null;
+		 function creatBull(){
+		 	var bull=document.createElement("div");
+		 	bull.className="buttet";
+		 	
+		 	divWrap.appendChild(bull);
+		 	//对象操作 bullTimer作为bull的一个属性
+		 	bull.bullTimer=null;
+		 	//DOM操作
+//		 	bull.setIdAttribute("bullTimer","null");
+		 	bull.bullTimer=setInterval(function(){
+		 		var offleft=bull.offsetLeft;
+		 		offleft+=5;
+		 		bull.style.left=offleft+"px";
+		 		//检测碰撞
+		 		if(offleft+bull.offsetWidth>=divCorp.offsetLeft){
+		 			blood-=10;
+		 			divCorp.innerHTML=blood;
+		 			clearInterval(bull.bullTimer);
+		 			bull.bullTimer=null;
+		 			bull.remove();
+		 			if(blood<=0){
+		 				clearInterval(timer);
+		 				timer=null;
+		 				//获取多余的子弹
+		 				getBulls();
+		 			}	
+		 		}
+		 	},30);
+		 	
+		 }
+		 //对多余的子弹进行处理
+		 function getBulls(){
+		 	var bulls=document.querySelectorAll(".buttet");
+		 	for (var i=0;i<bulls.length;i++){
+		 		clearInterval(bulls[i].bullTimer);
+		 		bulls[i].bullTimer=null;
+		 		bulls[i].remove();
+		 	}
+		 }
+		 
+		 //每隔一秒，创建一颗子弹
+		 timer=setInterval(function(){
+		 	creatBull();
+		 },1000);
+	</script>
+</html>
